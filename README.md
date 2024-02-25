@@ -26,7 +26,7 @@ This project is licensed under the [MIT License](LICENSE). Feel free to use, mod
 
 This repository is maintained by [Md. Asaduzzaman](https://github.com/s1kopath). If you have any questions, feedback, or suggestions, please don't hesitate to reach out.
 
-# =============================================
+# ============================================
 
 # 1. simple toast
 ```code
