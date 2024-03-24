@@ -1,0 +1,17 @@
+use Illuminate\Support\Facades\Log;
+Log::emergency($message);
+Log::alert($message);
+Log::critical($message);
+Log::error($message);
+Log::warning($message);
+Log::notice($message);
+Log::info($message);
+Log::debug($message);
+
+
+try {
+// code
+} catch (Exception $e) {
+// return 'Oops! Something went wrong. Please try again.';
+Log::error($e);
+}
