@@ -92,6 +92,7 @@ if (file_exists($path)) {
 # ============================================
 
 # 3. simple countdown timer
+
 ```code
 <style>
     p {
@@ -101,6 +102,7 @@ if (file_exists($path)) {
     }
 </style>
 ```
+
 ```code
 <p id="days"></p>
 <p id="hours"></p>
@@ -108,6 +110,7 @@ if (file_exists($path)) {
 <p id="secs"></p>
 <h2 id="end"></h2>
 ```
+
 ```code
 <script>
     // The data/time we want to countdown to
@@ -171,12 +174,33 @@ try {
 
 # ============================================
 
-# 3. import db with terminal
+# 5. import db with terminal
 
 ```bash
 mysql -u user_name -p
 password
 use database_name
 source /home/domain/public_html/web-files/test.sql
+
+```
+
+# ============================================
+
+# 6. open in window with popup
+
+```code
+<button onclick="openRequestedPopup()">Open Popup</button>
+
+```
+
+```code
+<script>
+    let windowObjectReference;
+    let windowFeatures = "popup";
+
+    function openRequestedPopup() {
+        windowObjectReference = window.open("/user", "mozillaWindow", windowFeatures);
+    }
+</script>
 
 ```

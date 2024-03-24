@@ -1,4 +1,4 @@
-# 3. import db with terminal
+# 5. import db with terminal
 
 ```bash
 mysql -u user_name -p
