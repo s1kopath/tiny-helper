@@ -4,11 +4,11 @@ Welcome to the Laravel Helper repository! This repository contains a collection 
 
 **Contents:**
 
-* **Custom Helpers:**  A collection of custom helper functions that extend Laravel's functionality and provide additional utilities for common tasks. 
-* **Blade Directives:**  Custom Blade directives that simplify common HTML rendering tasks and improve code readability. 
-* **Trait Classes:** ‍♀️ Reusable trait classes that encapsulate common functionality and can be easily integrated into your Laravel projects. 
-* **Service Providers:** ⚙️ Custom service providers that register and boot various components of your application, such as custom libraries or third-party packages. 
-* **Configuration Files:**  Sample configuration files or presets that provide default settings and configurations for common Laravel components. ⚙️
+- **Custom Helpers:** A collection of custom helper functions that extend Laravel's functionality and provide additional utilities for common tasks.
+- **Blade Directives:** Custom Blade directives that simplify common HTML rendering tasks and improve code readability.
+- **Trait Classes:** ‍♀️ Reusable trait classes that encapsulate common functionality and can be easily integrated into your Laravel projects.
+- **Service Providers:** ⚙️ Custom service providers that register and boot various components of your application, such as custom libraries or third-party packages.
+- **Configuration Files:** Sample configuration files or presets that provide default settings and configurations for common Laravel components. ⚙️
 
 ## Usage
 
@@ -29,6 +29,7 @@ This repository is maintained by [Md. Asaduzzaman](https://github.com/s1kopath).
 # ============================================
 
 # 1. simple toast
+
 ```code
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
@@ -64,10 +65,26 @@ This repository is maintained by [Md. Asaduzzaman](https://github.com/s1kopath).
 </script>
 
 ```
+
 In the backend,
+
 ```code
 return back()->with('success', 'Get going.');
 return back()->with('error', 'Road-light stop.');
 return back()->with('info', 'Great job !');
 return back()->with('warning', 'Wait for the green light.');
+```
+
+# ============================================
+
+# 2. change env file data
+
+```code
+    $path = base_path('.env');
+    $test = file_get_contents($path);
+
+    if (file_exists($path)) {
+        file_put_contents($path, str_replace('APP_ENV=production', 'APP_ENV=local', $test));
+    }
+
 ```
