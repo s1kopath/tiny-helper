@@ -204,3 +204,14 @@ source /home/domain/public_html/web-files/test.sql
 </script>
 
 ```
+
+# ============================================
+
+# 7. read from jason
+
+```code
+<?php
+    $students = json_decode(file_get_contents(public_path() . "/stock.json"), true);
+?>
+
+```
