@@ -1,4 +1,4 @@
-# 7. read from jason
+# 7. read from json
 
 ```code
 <?php
