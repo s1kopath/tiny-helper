@@ -1,0 +1,51 @@
+name:  CLOUDWAYS DEVELOPMENT WITH API
+
+on:
+  push:
+    branches: [ "dev" ]
+  pull_request:
+    branches: [ "dev" ]
+    types:
+      - closed
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cloudways API Git Pull
+        uses: roelmagdaleno/cloudways-api-git-pull-action@stable
+        with:
+          email: ${{ secrets.CW_DEV_EMAIL }}
+          api-key: ${{ secrets.CW_DEV_API_KEY }}
+          server-id: ${{ secrets.CW_DEV_SERVER_ID }}
+          app-id: ${{ secrets.CW_DEV_APP_ID }}
+          branch-name: "dev"
+          deploy-path: ''
+
+
+      - name: Executing Linux Commands
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ secrets.CW_DEV_HOST }}
+          username: ${{ secrets.CW_DEV_SSH_USER }}
+          port: 22
+          password: ${{ secrets.CW_DEV_SSH_PASS }}
+          # key: ${{ secrets.PROD_SSH_KEY }}
+          script: |
+            cd ./public_html
+            echo "creating env file...."
+            php -r "file_exists('.env') || copy('.env.example', '.env');"
+
+            echo "executing composer install...."
+            composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+            #echo "Generating key..."
+            #php artisan key:generate
+            #echo "running migration"
+            php artisan migrate
+            #echo "run seed"
+            #php artisan db:seed
+
+            php ./artisan optimize:clear
+            echo "done...."

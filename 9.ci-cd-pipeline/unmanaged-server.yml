@@ -1,0 +1,54 @@
+name: UNMANAGED SERVER DEPLOYMENT
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Copy file via scp
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.STG_HOST }}
+          username: ${{ secrets.STG_USER }}
+          port: ${{ secrets.STG_PORT }}
+          password: ${{ secrets.STG_PASS }}
+          # KEY: ${{ secrets.SSH_SECRET_KEY }}
+          source: "."
+          target: "/var/www/html"
+
+      - name: executing laravel deployement commands
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.STG_HOST }}
+          username: ${{ secrets.STG_USER }}
+          port: ${{ secrets.STG_PORT }}
+          password: ${{ secrets.STG_PASS }}
+          # KEY: ${{ secrets.SSH_SECRET_KEY }}
+          script: |
+            # cd /var/www/html
+            cd /var/www/html
+            echo "creating env file...."
+            php -r "file_exists('.env') || copy('.env.example', '.env');"
+            echo "executing composer install...."
+            composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+            echo "Generating key..."
+            php artisan key:generate
+            echo "Granting directory permissions..."
+            chmod -R 777 bootstrap/
+            chmod -R 777 storage/
+            #echo "running migration"
+            #php artisan migrate
+            #echo "run seed"
+            #php artisan db:seed
+            #echo "finally unit testing..."
+            #vendor/bin/phpunit
+            #echo "executing yarn command"
+            #echo  yarn && yarn run prod
+            echo "done...."
