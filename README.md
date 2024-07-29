@@ -1,22 +1,22 @@
-# Laravel Helper 🤲
+# Tiny Helper 🤲
 
-Welcome to the Laravel Helper repository! This repository contains a collection of functions, files, and methods that are super helpful for Laravel projects. 🪄✨
+Welcome to the Tiny Helper repository! This repository contains a collection of functions, files, and methods that are super helpful for programming. 🪄✨
 
 **Contents:**
 
-- **Custom Helpers:** A collection of custom helper functions that extend Laravel's functionality and provide additional utilities for common tasks.
+- **Custom Helpers:** A collection of custom helper functions that extend functionality and provide additional utilities for common tasks.
 - **Blade Directives:** Custom Blade directives that simplify common HTML rendering tasks and improve code readability.
-- **Trait Classes:** ‍♀️ Reusable trait classes that encapsulate common functionality and can be easily integrated into your Laravel projects.
+- **Trait Classes:** ‍♀️ Reusable trait classes that encapsulate common functionality and can be easily integrated into your projects.
 - **Service Providers:** ⚙️ Custom service providers that register and boot various components of your application, such as custom libraries or third-party packages.
-- **Configuration Files:** Sample configuration files or presets that provide default settings and configurations for common Laravel components. ⚙️
+- **Configuration Files:** Sample configuration files or presets that provide default settings and configurations for common components. ⚙️
 
 ## Usage
 
-To use the helpers, files, or methods provided in this repository, simply clone or download the repository and integrate the desired components into your Laravel project as needed. You can also explore the individual files or collections to understand their functionalities and how they can benefit your project.
+To use the helpers, files, or methods provided in this repository, simply clone or download the repository and integrate the desired components into your project as needed. You can also explore the individual files or collections to understand their functionalities and how they can benefit your project.
 
 ## Contributions
 
-Contributions to this repository are welcome! If you have any useful helpers, files, or methods that you'd like to share with the Laravel community, feel free to fork this repository, add your contributions, and submit a pull request. Please ensure that your contributions adhere to the repository's guidelines and are well-documented.
+Contributions to this repository are welcome! If you have any useful helpers, files, or methods that you'd like to share with the community, feel free to fork this repository, add your contributions, and submit a pull request. Please ensure that your contributions adhere to the repository's guidelines and are well-documented.
 
 ## License
 
