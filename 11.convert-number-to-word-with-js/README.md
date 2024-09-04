@@ -1,5 +1,4 @@
 
-# ============================================
 # 11. convert number to word with js
 
 ```code
