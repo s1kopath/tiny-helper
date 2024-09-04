@@ -1,4 +1,3 @@
-
 # ============================================
 # 12. db transactions
 
@@ -6,7 +5,7 @@
 use Illuminate\Support\Facades\DB;
 ```
 
-// =========== Basic Usage ===========
+## =========== Basic Usage ===========
 ```code
 DB::transaction(function () {
     // Your database operations go here
@@ -15,8 +14,8 @@ DB::transaction(function () {
 });
 ```
 
-// =========== Handling Rollback and Commit Manually ===========
-// You can also manually begin, commit, and roll back transactions if you need more control:
+## =========== Handling Rollback and Commit Manually ===========
+You can also manually begin, commit, and roll back transactions if you need more control:
 ```code
 DB::beginTransaction();
 
@@ -33,8 +32,8 @@ try {
 }
 ```
 
-// =========== Using Transactions in Eloquent Events ===========
-// If you want to use transactions within model events (like creating, updating, etc.), you can do so like this:
+## =========== Using Transactions in Eloquent Events ===========
+If you want to use transactions within model events (like creating, updating, etc.), you can do so like this:
 ```code
 User::creating(function ($user) {
     DB::transaction(function () use ($user) {
@@ -43,8 +42,8 @@ User::creating(function ($user) {
 });
 ```
 
-// =========== Nested Transactions ===========
-// Laravel also supports nested transactions. If a transaction is nested within another transaction, Laravel will only commit the outermost transaction. If any transaction fails, all nested transactions will be rolled back.
+## =========== Nested Transactions ===========
+Laravel also supports nested transactions. If a transaction is nested within another transaction, Laravel will only commit the outermost transaction. If any transaction fails, all nested transactions will be rolled back.
 ```code
 DB::transaction(function () {
     // First set of operations
