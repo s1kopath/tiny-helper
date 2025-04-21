@@ -484,3 +484,18 @@ https://yourdomain.com/shortcut.php?target=/core/public/storage&link=/storage
 - Ensure the API response includes the token in a format like { "token": "your_token_value" }. Adjust the script if the token is located deeper in the JSON structure.
 Run the request. If the login is successful, the token will be stored in an environment variable named token.
 - Run the Script
+
+# 15. quick popup
+
+## basic usage
+
+```code
+    <!-- Optional: Set the alert message -->
+    <script>
+        window.customAlertMessage = "💳 You have unpaid dues. Please clear them to continue.";
+        window.customAlertImage = "https://cdn-icons-png.flaticon.com/512/190/190411.png"; // or your own image URL
+    </script>
+
+    <!-- Load the modal alert -->
+    <script src="path/to/custom-alert-modal.js"></script>
+```
