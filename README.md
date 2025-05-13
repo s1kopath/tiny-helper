@@ -499,3 +499,11 @@ Run the request. If the login is successful, the token will be stored in an envi
     <!-- Load the modal alert -->
     <script src="path/to/custom-alert-modal.js"></script>
 ```
+
+# 16. custom controlled laravel artisan command
+
+## usage
+
+```code
+    php artisan currency:control
+```
