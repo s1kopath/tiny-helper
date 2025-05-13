@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" onkeyup="globalDebounce(this, () => handleInput(this.value), 300)">
+
+    <script>
+        // Global debounce map to track multiple debounced functions by key
+        const debounceMap = new Map();
+
+        function globalDebounce(key, func, wait = 300) {
+            const mapKey = typeof key === 'object' ? key : String(key);
+            if (debounceMap.has(mapKey)) {
+                clearTimeout(debounceMap.get(mapKey));
+            }
+            const timeout = setTimeout(func, wait);
+            debounceMap.set(mapKey, timeout);
+        }
+
+        function handleInput(value) {
+            console.log('waiting for 300ms');
+            console.log('Input changed to: ' + value);
+        }
+    </script>
+
+
+    <input type="number" id="shipping_charge">
+    <input type="number" id="discount">
+    <input type="number" id="paid">
+
+    <script>
+        $('#shipping_charge, #discount, #paid').on('input', handleInput);
+
+        function handleInput() {
+            const shipping_charge = $('#shipping_charge').val();
+            const discount = $('#discount').val();
+            const paid = $('#paid').val();
+            const total = shipping_charge - discount + paid;
+            $('#total').val(total);
+        }
+
+        $(document).on('input', '[id^="quantity_"]', function () {
+            const id = $(this).attr('id').split('_')[1];
+            globalDebounce(`quantity_${id}`, () => handleInput(id), 300);
+        });
+
+        $(document).on('input', '[id^="unit_price_"]', function () {
+            const id = $(this).attr('id').split('_')[2];
+            globalDebounce(`price_${id}`, () => handleInput(id), 300);
+        });
+
+        function handleInput(id) {
+            const quantity = $('#quantity_' + id).val();
+            const unitPrice = $('#unit_price_' + id).val();
+            const total = quantity * unitPrice;
+            $('#total_' + id).val(total);
+        }
+    </script>
+</body>
+
+</html>
