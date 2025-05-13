@@ -520,5 +520,8 @@ Run the request. If the login is successful, the token will be stored in an envi
     test: Adding or updating tests
     chore: Miscellaneous tasks like updating build scripts
     ci: Continuous integration updates
-
+    build: update dependency versions
+    revert: revert "feat: add new login functionality"
+    deps: bump axios from 0.21.1 to 0.21.2
+    config: update ESLint rules
 ```
