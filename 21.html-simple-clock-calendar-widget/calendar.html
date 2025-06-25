@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+</head>
+
+<body>
+    <style>
+        .calendar-body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .calendar-container {
+            display: inline-block;
+            background-color: #fff;
+            border-radius: 15px;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2px;
+        }
+
+        .header-display {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-display p {
+            color: #1f3a93;
+            margin: 5px;
+            font-size: 1.2rem;
+            word-spacing: 0.5rem;
+        }
+
+        .calendar-pre {
+            padding: 10px;
+            margin: 0;
+            cursor: pointer;
+            font-size: 0.5rem;
+            color: #1f3a93;
+        }
+
+        .days,
+        .week {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            margin: auto;
+            padding: 0 10px 10px 10px;
+            justify-content: space-between;
+        }
+
+        .week div,
+        .days div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 1.2rem;
+            width: 1.2em;
+            border-radius: 100%;
+            font-size: 0.8rem;
+        }
+
+        @media screen and (max-width: 768px) {
+            .header-display p {
+                font-size: 0.5rem;
+            }
+
+            .week div {
+                font-size: 0.5rem;
+            }
+
+            .days div {
+                font-size: 0.9rem;
+            }
+        }
+
+        .days div:hover {
+            background: #ebedf0;
+            color: rgb(25, 25, 201);
+            cursor: pointer;
+        }
+
+        .week div {
+            opacity: 0.5;
+        }
+
+        .current-date {
+            background-color: #1f3a93;
+            color: #fff;
+        }
+    </style>
+    <div class="calendar-body">
+        <div class="calendar-container">
+            <div class="calendar">
+                <header class="calendar-header">
+                    <pre class="calendar-pre left">◀</pre>
+                    <div class="header-display">
+                        <p class="display">""</p>
+                    </div>
+                    <pre class="calendar-pre right">▶</pre>
+                </header>
+
+                <div class="week">
+                    <div>Su</div>
+                    <div>Mo</div>
+                    <div>Tu</div>
+                    <div>We</div>
+                    <div>Th</div>
+                    <div>Fr</div>
+                    <div>Sa</div>
+                </div>
+                <div class="days"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let display = document.querySelector(".display");
+        let days = document.querySelector(".days");
+        let previous = document.querySelector(".left");
+        let next = document.querySelector(".right");
+        let selected = document.querySelector(".selected");
+
+        let date = new Date();
+
+        let year = date.getFullYear();
+        let month = date.getMonth();
+
+        function displayCalendar() {
+            const firstDay = new Date(year, month, 1);
+
+            const lastDay = new Date(year, month + 1, 0);
+
+            const firstDayIndex = firstDay.getDay(); //4
+
+            const numberOfDays = lastDay.getDate(); //31
+
+            let formattedDate = date.toLocaleString("en-US", {
+                month: "long",
+                year: "numeric"
+            });
+
+            display.innerHTML = `${formattedDate}`;
+
+            for (let x = 1; x <= firstDayIndex; x++) {
+                const div = document.createElement("div");
+                div.innerHTML += "";
+
+                days.appendChild(div);
+            }
+
+            for (let i = 1; i <= numberOfDays; i++) {
+                let div = document.createElement("div");
+                let currentDate = new Date(year, month, i);
+
+                div.dataset.date = currentDate.toDateString();
+
+                div.innerHTML += i;
+                days.appendChild(div);
+                if (
+                    currentDate.getFullYear() === new Date().getFullYear() &&
+                    currentDate.getMonth() === new Date().getMonth() &&
+                    currentDate.getDate() === new Date().getDate()
+                ) {
+                    div.classList.add("current-date");
+                }
+            }
+        }
+
+        // Call the function to display the calendar
+        displayCalendar();
+
+        previous.addEventListener("click", () => {
+            days.innerHTML = "";
+            selected.innerHTML = "";
+
+            if (month < 0) {
+                month = 11;
+                year = year - 1;
+            }
+
+            month = month - 1;
+
+            date.setMonth(month);
+
+            displayCalendar();
+        });
+
+        next.addEventListener("click", () => {
+            days.innerHTML = "";
+            selected.innerHTML = "";
+
+            if (month > 11) {
+                month = 0;
+                year = year + 1;
+            }
+
+            month = month + 1;
+            date.setMonth(month);
+
+            displayCalendar();
+        });
+    </script>
+</body>
+
+</html>

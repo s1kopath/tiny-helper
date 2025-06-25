@@ -620,3 +620,9 @@ Payment Gateway error codes, subject to corresponding failure scenario (https://
     <img src="/img.png" alt="img" 
     onerror="this.onerror=null;this.src='/error.png';" />
 ```
+
+# 21. html simple clock calendar widget
+
+### usage
+
+`copy and paste the following code to your html file`
