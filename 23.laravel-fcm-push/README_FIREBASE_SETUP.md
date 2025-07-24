@@ -25,9 +25,7 @@ Add the following to your `.env` file:
 
 ```env
 # Firebase Configuration
-FIREBASE_PROJECT=your-project-id
 FIREBASE_CREDENTIALS=storage/app/firebase/service-account.json
-FIREBASE_DATABASE_URL=https://your-project-id.firebaseio.com
 ```
 
 ## Step 3: Update Service Provider
