@@ -84,6 +84,13 @@ class PushNotificationService
                 ->withNotification($notification)
                 ->withData($data);
 
+            // $message = CloudMessage::new()
+            //     ->withData([
+            //         'title' => $title,
+            //         'body' => $body,
+            //         // ... other custom keys
+            //     ]);
+
             // Send to multiple tokens
             $report = $messaging->sendMulticast($message, $tokens);
 
