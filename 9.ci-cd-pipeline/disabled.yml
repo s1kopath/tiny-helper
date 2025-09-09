@@ -1,0 +1,13 @@
+name: DISABLED DEPLOYMENT
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    if: false   # 👈 this prevents running
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "This job is disabled"
