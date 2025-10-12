@@ -21,7 +21,7 @@ jobs:
         with:
           host: ${{ secrets.AWS_HOST }}
           username: ${{ secrets.AWS_USER }}
-          key: ${{ secrets.AWS_SSH_KEY }}
+          key: ${{ secrets.AWS_SSH_KEY }} # full value of the .pem file
           port: ${{ secrets.AWS_PORT }}
           source: "."
           target: "/var/www/html" # change if your project path is different
