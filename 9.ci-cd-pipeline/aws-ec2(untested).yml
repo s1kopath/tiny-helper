@@ -1,0 +1,56 @@
+name: AWS EC2 Laravel Deployment
+
+on:
+  push:
+    branches: ["dev"]
+  pull_request:
+    branches: ["dev"]
+    types:
+      - closed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Copy files to AWS EC2
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.AWS_HOST }}
+          username: ${{ secrets.AWS_USER }}
+          key: ${{ secrets.AWS_SSH_KEY }}
+          port: ${{ secrets.AWS_PORT }}
+          source: "."
+          target: "/var/www/html" # change if your project path is different
+          rm: true
+          overwrite: true
+          strip_components: 1
+          exclude: |
+            .git/
+            node_modules/
+            vendor/
+            storage/
+            .env
+
+      - name: SSH into AWS EC2 and run deploy commands
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.AWS_HOST }}
+          username: ${{ secrets.AWS_USER }}
+          key: ${{ secrets.AWS_SSH_KEY }}
+          port: ${{ secrets.AWS_PORT }}
+          script: |
+            cd /var/www/html
+            echo "Deploying Laravel..."
+            php -r "file_exists('.env') || copy('.env.example', '.env');"
+            composer install --no-dev --optimize-autoloader
+            #php artisan key:generate
+            php artisan migrate --force
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
+            chmod -R 775 storage bootstrap/cache
+            echo "Deployment complete!"
