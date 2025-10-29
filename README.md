@@ -687,7 +687,6 @@ RewriteRule ^(.*)$ public/$1 [L]
 
 ```code
     'timezone' => 'Asia/Dhaka'
-
 ```
 
 ## 2. app/Traits/RawTimestamps.php
@@ -709,13 +708,10 @@ RewriteRule ^(.*)$ public/$1 [L]
             return $date->format('Y-m-d H:i:s');
         }
     }
-
-
 ```
 
 ## 3. app\Models\User.php
 
 ```code
     use RawTimestamps;
-
 ```
