@@ -642,3 +642,80 @@ RewriteRule ^(.*)$ public/$1 [L]
 
 ### usage > README_FIREBASE_SETUP.md
 
+
+# 24. sweetalert confirm dialog
+
+### usage
+
+```code
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        // ✅ Global confirm dialog helper
+        window.confirmDialog = async function (message = 'Are you sure?') {
+            const result = await Swal.fire({
+                title: 'Please Confirm',
+                text: message,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'Cancel',
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+            });
+            return result.isConfirmed;
+        };
+
+        // ✅ Example usage
+        async function removeCurrency(currencyId) {
+            const confirmed = await confirmDialog('Are you sure you want to remove this currency?');
+            if (!confirmed) return;
+
+            // Example: Simulate AJAX request
+            setTimeout(() => {
+                Swal.fire('Removed!', `Currency ID ${currencyId} has been removed.`, 'success');
+            }, 600);
+        }
+    </script>
+```
+
+# 25. timestamp match laravel application
+
+### usage
+
+## 1. config/app.php
+
+```code
+    'timezone' => 'Asia/Dhaka'
+
+```
+
+## 2. app/Traits/RawTimestamps.php
+
+```code
+    <?php
+
+    namespace App\Traits;
+
+    use DateTimeInterface;
+
+    trait RawTimestamps
+    {
+        /**
+        * Prevent Laravel from trying to serialize DateTime objects.
+        */
+        protected function serializeDate(DateTimeInterface $date)
+        {
+            return $date->format('Y-m-d H:i:s');
+        }
+    }
+
+
+```
+
+## 3. app\Models\User.php
+
+```code
+    use RawTimestamps;
+
+```
