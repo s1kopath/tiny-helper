@@ -1,7 +1,5 @@
 # 25. timestamp match laravel application
 
-### usage
-
 ## 1. config/app.php
 
 ```code
