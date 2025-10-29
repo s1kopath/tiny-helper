@@ -6,7 +6,6 @@
 
 ```code
     'timezone' => 'Asia/Dhaka'
-
 ```
 
 ## 2. app/Traits/RawTimestamps.php
@@ -29,12 +28,10 @@
         }
     }
 
-
 ```
 
 ## 3. app\Models\User.php
 
 ```code
     use RawTimestamps;
-
 ```
