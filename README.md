@@ -236,14 +236,18 @@ something
 </script>
 
 ```
+
 # ============================================
+
 # 9. ci/cd pipeline
+
 -cpanel
 -cloudways api
 -cloudways sftp
 -unmanaged server
 
 # ============================================
+
 # 10. prevent form double submission with js
 
 ```code
@@ -285,6 +289,7 @@ something
 ```
 
 # ============================================
+
 # 11. convert number to word with js
 
 ```code
@@ -397,8 +402,8 @@ something
 
 ```
 
-
 # ============================================
+
 # 12. db transactions
 
 ```code
@@ -406,6 +411,7 @@ use Illuminate\Support\Facades\DB;
 ```
 
 ## =========== Basic Usage ===========
+
 ```code
 DB::transaction(function () {
     // Your database operations go here
@@ -415,7 +421,9 @@ DB::transaction(function () {
 ```
 
 ## =========== Handling Rollback and Commit Manually ===========
+
 You can also manually begin, commit, and roll back transactions if you need more control:
+
 ```code
 DB::beginTransaction();
 
@@ -433,7 +441,9 @@ try {
 ```
 
 ## =========== Using Transactions in Eloquent Events ===========
+
 If you want to use transactions within model events (like creating, updating, etc.), you can do so like this:
+
 ```code
 User::creating(function ($user) {
     DB::transaction(function () use ($user) {
@@ -443,7 +453,9 @@ User::creating(function ($user) {
 ```
 
 ## =========== Nested Transactions ===========
+
 Laravel also supports nested transactions. If a transaction is nested within another transaction, Laravel will only commit the outermost transaction. If any transaction fails, all nested transactions will be rolled back.
+
 ```code
 DB::transaction(function () {
     // First set of operations
@@ -458,33 +470,38 @@ DB::transaction(function () {
 # 13. php script to create shortcut
 
 Run the Script
+
 - Upload this script to your server (e.g., in your web root directory).
 - Visit the script in your browser (e.g., https://yourdomain.com/create-shortcut.php).
 
-
 ## =========== Basic Usage create-shortcut.php ===========
+
 Change the paths based on your dir,
+
 - $targetFolder: The path to the original folder.
 - $linkFolder: The path for the shortcut.
 
 Access the script with:
+
 ```code
 https://yourdomain.com/create-shortcut.php
 ```
 
-
 ## =========== Advanced Usage shortcut.php ===========
+
 Access the script with:
+
 ```code
 https://yourdomain.com/shortcut.php?target=/core/public/storage&link=/storage
 ```
 
-# 14. script to store auth token postman environment 
+# 14. script to store auth token postman environment
 
 ## Go to your Postman collection or individual request.
+
 - Under the Tests tab of your login request, paste the script.
 - Ensure the API response includes the token in a format like { "token": "your_token_value" }. Adjust the script if the token is located deeper in the JSON structure.
-Run the request. If the login is successful, the token will be stored in an environment variable named token.
+  Run the request. If the login is successful, the token will be stored in an environment variable named token.
 - Run the Script
 
 # 15. quick popup
@@ -531,6 +548,7 @@ Run the request. If the login is successful, the token will be stored in an envi
 # 18. global debounce
 
 ## setup
+
 ```code
     <script>
         // Global debounce map to track multiple debounced functions by key
@@ -580,6 +598,7 @@ OTP: 123456
 Pin: 12121
 
 Regular Active Customer wallet numbers:-
+
 ```
 1.      01770618575
 
@@ -616,8 +635,9 @@ Payment Gateway error codes, subject to corresponding failure scenario (https://
 # 20. img error falback js
 
 ### usage
+
 ```code
-    <img src="/img.png" alt="img" 
+    <img src="/img.png" alt="img"
     onerror="this.onerror=null;this.src='/error.png';" />
 ```
 
@@ -626,7 +646,6 @@ Payment Gateway error codes, subject to corresponding failure scenario (https://
 ### usage
 
 `copy and paste the following code to your html file`
-
 
 # 22. laravel cpanel htaccess
 
@@ -641,7 +660,6 @@ RewriteRule ^(.*)$ public/$1 [L]
 # 23. laravel fcm push
 
 ### usage > README_FIREBASE_SETUP.md
-
 
 # 24. sweetalert confirm dialog
 
@@ -712,4 +730,16 @@ RewriteRule ^(.*)$ public/$1 [L]
 
 ```code
     use RawTimestamps;
+```
+
+# 26. Disable console logs in production
+
+```code
+    <script>
+        console.log = function() {};
+        console.debug = function() {};
+        console.warn = function() {};
+        console.error = function() {};
+        console.info = function() {};
+    </script>
 ```
