@@ -1,0 +1,98 @@
+name: NAGADHAT STAGING DEPLOYMENT (HTTPS)
+
+on:
+  push:
+    branches:
+      - development-branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 🚀 Deploy via SSH and Git Pull (HTTPS)
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.NAGADHAT_STG_HOST }}
+          username: ${{ secrets.NAGADHAT_STG_USER }}
+          port: ${{ secrets.NAGADHAT_STG_PORT }}
+          key: ${{ secrets.NAGADHAT_STG_SSH_KEY }}
+          script: |
+            set -e  # Exit on any error
+            
+            # Configuration
+            APP_DIR="/var/www/html"
+            BRANCH="development-branch"
+            
+            echo "📦 Starting deployment to staging..."
+            echo "================================================"
+            
+            cd $APP_DIR
+            
+            # Check for uncommitted changes
+            if [[ -n $(git status -s) ]]; then
+              echo "⚠️  Warning: Uncommitted changes detected. Stashing..."
+              git stash save "Auto-stash before deployment $(date +%Y%m%d-%H%M%S)"
+            fi
+            
+            # Fetch and pull latest changes using HTTPS
+            echo "🔄 Fetching latest changes from $BRANCH..."
+            git fetch origin $BRANCH
+            
+            echo "⬇️  Pulling changes..."
+            git pull origin $BRANCH
+            
+            # Check if .env exists
+            if [ ! -f .env ]; then
+              echo "📝 Creating .env file from example..."
+              cp .env.example .env
+              php artisan key:generate --force
+            fi
+            
+            # Install/Update Composer dependencies
+            echo "📚 Installing Composer dependencies..."
+            composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
+            
+            # Clear old caches
+            echo "🧹 Clearing old caches..."
+            php artisan optimize:clear
+            
+            # Laravel optimizations
+            echo "⚡ Optimizing Laravel application..."
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
+            
+            # Set proper permissions
+            echo "🔐 Setting directory permissions..."
+            chmod -R 755 storage bootstrap/cache
+            
+            # Optional: Run database migrations
+            # Uncomment the lines below when ready to run migrations
+            # echo "🗄️  Running database migrations..."
+            # php artisan migrate --force
+            
+            # Optional: Seed database
+            # echo "🌱 Seeding database..."
+            # php artisan db:seed --force
+            
+            # Reload PHP-FPM (adjust PHP version as needed)
+            echo "🔄 Reloading PHP-FPM..."
+            sudo systemctl reload php8.2-fpm 2>/dev/null || sudo systemctl reload php8.1-fpm 2>/dev/null || sudo systemctl reload php-fpm 2>/dev/null || true
+            
+            # Display deployment info
+            echo "================================================"
+            echo "✅ Deployment completed successfully!"
+            echo "📌 Current commit: $(git log -1 --pretty=format:'%h - %s (%an, %ar)')"
+            echo "📅 Deployed at: $(date '+%Y-%m-%d %H:%M:%S')"
+            echo "================================================"
+      
+      - name: 📬 Deployment Status
+        if: always()
+        run: |
+          if [ ${{ job.status }} == 'success' ]; then
+            echo "✅ Deployment to staging completed successfully"
+          else
+            echo "❌ Deployment to staging failed"
+            exit 1
+          fi
