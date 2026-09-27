@@ -1,0 +1,65 @@
+name: Cloudways Deployment
+
+on:
+  push:
+    branches: ["develop"]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Cloudways Deployment
+        run: |
+          curl --fail-with-body --request POST \
+            --url https://api.cloudways.com/api/v1/git/pull \
+            --header "Authorization: Bearer ${{ secrets.CW_ACCESS_TOKEN }}" \
+            --header "Content-Type: application/x-www-form-urlencoded" \
+            --data-urlencode "server_id=${{ secrets.CW_SERVER_ID }}" \
+            --data-urlencode "app_id=${{ secrets.CW_APP_ID }}" \
+            --data-urlencode "branch_name=develop" \
+            --data-urlencode "deploy_path="
+
+      - name: Laravel Deployment
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.CW_HOST }}
+          username: ${{ secrets.CW_SSH_USER }}
+          port: 22
+          password: ${{ secrets.CW_SSH_PASS }}
+          script: |
+            # Change this to the Laravel application's directory
+            cd ~/public_html
+
+            echo "Deploying in: $(pwd)"
+
+            # Verify Laravel application
+            if [ ! -f "artisan" ]; then
+              echo "ERROR: Laravel application not found!"
+              exit 1
+            fi
+
+            echo "Installing Composer dependencies..."
+            composer install \
+              --no-ansi \
+              --no-interaction \
+              --no-scripts \
+              --no-progress \
+              --prefer-dist
+
+            echo "Clearing application cache..."
+            php artisan optimize:clear
+
+            echo "Discovering packages..."
+            php artisan package:discover --ansi
+
+            echo "Running database migrations..."
+            php artisan migrate --force
+
+            echo "Deployment completed successfully."
